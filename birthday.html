@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Payal ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      padding: 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    button {
+      background: #ff4b5c;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 30px;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ff1e40;
+    }
+
+    .message-box {
+      font-size: 20px;
+      line-height: 1.8;
+      background: rgba(0,0,0,0.4);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .photo {
+      width: 300px;
+      border-radius: 15px;
+      margin: 15px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    }
+
+    .fireworks {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    h1 {
+      font-size: 36px;
+      text-shadow: 2px 2px 6px #000;
+    }
+  </style>
+</head>
+<body>
+  <canvas class="fireworks"></canvas>
+  <div class="container">
+    <div id="start">
+      <h1>🎉 Hey Payal, Click below for your surprise 🎁</h1>
+      <button onclick="startSurprise()">Open Surprise</button>
+    </div>
+
+    <div id="messages" class="hidden">
+      <div id="msg-box" class="message-box"></div>
+      <button id="nextBtn" onclick="nextMessage()">Next ➡️</button>
+    </div>
+
+    <div id="photos" class="hidden">
+      <h1>💕 Some memories for you 💕</h1>
+      <img src="photo1.jpg" class="photo">
+      <img src="photo2.jpg" class="photo">
+      <img src="photo3.jpg" class="photo"><br>
+      <button onclick="finalSurprise()">Final Surprise 🎆</button>
+    </div>
+
+    <div id="final" class="hidden">
+      <h1>Happy Birthday once again, my girl 🎂🎉❤️</h1>
+      <p class="message-box">
+        Forever yours,<br>
+        Himanshu 💌
+      </p>
+    </div>
+  </div>
+
+  <!-- Background music -->
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/03/07/audio_c58c9c55a3.mp3?filename=romantic-piano-melody-14095.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const messages = [
+      "Dear Payal, Sabse pehle to tumhe mere taraf se janm din ki hardik shubhkamnaye ❤️ (Many many happy returns of the day my girl)",
+      "Aaj ke din tum iss duniya mein aayi thi aur dharti maa ko ek bojh mila 🤣🤣 (joking, don’t kill me later)",
+      "Tumhari hasi, tumhare nakhre, tumhare calls aur tumhara roz roz ka kalesh… sab mere liye duniya ke sabse pyare moments hain ❤️",
+      "Sach bolu to jitna tum mujhe pareshaan karti ho na utna hi main khush hota hoon tumhare sath rehkar. Bas ese hi haste khelte rehna aur photo bhejte rehna 🤫🥹🙂",
+      "Kabhi kabhi lagta hai ki shayad mai words mei express nahi kar pata, par tum meri life ka sabse khubsurat hissa ho 🥹",
+      "Ye distance mushkil hai… par mujhe pata hai ek din ye khatam hogi. Aur us din main tumhe tightly hug karke bolunga: 'Finally my girl is with me 🥹🥹'",
+      "Ek chhoti si shayari sirf tumhare liye:\n\nDooriyan chahe jitni bhi ho, dil se dil jud jaate hain 🙂‍↕️\nTum meri jindagi mein ho, isliye armaan saj jaate hain 🍃\nZindagi mein tum ho toh har din khubsurat lagta hai…\nTum meri muskaan ho, tum bin sab adhoora lagta hai ❤️"
+    ];
+
+    let msgIndex = 0;
+
+    function startSurprise() {
+      document.getElementById("start").classList.add("hidden");
+      document.getElementById("messages").classList.remove("hidden");
+      document.getElementById("msg-box").innerText = messages[msgIndex];
+      document.getElementById("bgMusic").play();
+    }
+
+    function nextMessage() {
+      msgIndex++;
+      if (msgIndex < messages.length) {
+        document.getElementById("msg-box").innerText = messages[msgIndex];
+      } else {
+        document.getElementById("messages").classList.add("hidden");
+        document.getElementById("photos").classList.remove("hidden");
+      }
+    }
+
+    function finalSurprise() {
+      document.getElementById("photos").classList.add("hidden");
+      document.getElementById("final").classList.remove("hidden");
+      launchFireworks();
+    }
+
+    // Fireworks effect
+    function launchFireworks() {
+      const canvas = document.querySelector(".fireworks");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let particles = [];
+
+      function createParticle(x, y) {
+        for (let i = 0; i < 100; i++) {
+          particles.push({
+            x: x,
+            y: y,
+            radius: Math.random() * 2 + 1,
+            color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+            angle: Math.random() * 2 * Math.PI,
+            speed: Math.random() * 5 + 2,
+            life: 100
+          });
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p, i) => {
+          p.x += Math.cos(p.angle) * p.speed;
+          p.y += Math.sin(p.angle) * p.speed;
+          p.life--;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+          if (p.life <= 0) particles.splice(i, 1);
+        });
+        requestAnimationFrame(animate);
+      }
+
+      createParticle(canvas.width / 2, canvas.height / 2);
+      animate();
+    }
+  </script>
+</body>
+</html>
